@@ -11,3 +11,6 @@ this is microservices little project using the listed below technologies
 ```
 docker-compose up --build
 ```
+
+### reference
+https://github.com/stuyy/nestjs-microservices-with-nats
