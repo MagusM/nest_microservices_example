@@ -1,4 +1,4 @@
-# HiGuy
+# NestJS microservices example
 
 ## description
 this is microservices little project using the listed below technologies
