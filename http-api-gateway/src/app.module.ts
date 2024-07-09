@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { NatsClientModule } from './nats-client/nats-client.module';
+import { PaymentsModule } from './payments/payments.module';
 import { UsersModule } from './users/users.module';
 
 @Module({
-  imports: [NatsClientModule, UsersModule],
+  imports: [UsersModule, PaymentsModule],
   controllers: [],
   providers: [],
 })
