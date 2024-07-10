@@ -1,14 +1,15 @@
 import { Controller } from '@nestjs/common';
 import { EventPattern, MessagePattern, Payload } from '@nestjs/microservices';
-import { createUserDto } from './dtos/CreateUser.dto';
+import { CreateUserDto } from './dtos/CreateUser.dto';
+import { UsersService } from './users.service';
 
 @Controller()
 export class UsersMicroserviceController {
-  @MessagePattern({ cmd: 'createUser' })
-  createUser(@Payload() data: createUserDto) {
-    console.log(data);
+  constructor(private userService: UsersService) {}
 
-    return data;
+  @MessagePattern({ cmd: 'createUser' })
+  createUser(@Payload() data: CreateUserDto) {
+    return this.userService.createUser(data);
   }
 
   @EventPattern('paymentCreated')
