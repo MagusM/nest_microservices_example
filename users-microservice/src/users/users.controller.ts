@@ -16,4 +16,11 @@ export class UsersMicroserviceController {
   paymentCreated(@Payload() data: any) {
     console.log('Payment created trigger use_api', data);
   }
+
+  @MessagePattern({ cmd: 'getUserById' })
+  getUserById(@Payload() userId: string) {
+    const user = this.userService.getUserById(userId);
+
+    return user;
+  }
 }

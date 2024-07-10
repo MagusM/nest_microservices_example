@@ -15,4 +15,11 @@ export class UsersService {
 
     return this.usersRepository.save(newUser);
   }
+
+  async getUserById(id: string) {
+    return await this.usersRepository.findOne({
+      where: { id },
+      relations: ['payments'],
+    });
+  }
 }
