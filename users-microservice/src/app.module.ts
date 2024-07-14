@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Payments } from './typeorm/entities/Payments';
 import { User } from './typeorm/entities/User';
 import { UserModule } from './users/users.module';
+import { UserTypesModule } from './user-types/user-types.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { UserModule } from './users/users.module';
       username: 'testuser',
       password: 'testuser123',
     }),
+    UserTypesModule,
   ],
   controllers: [],
   providers: [],

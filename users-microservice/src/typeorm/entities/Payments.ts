@@ -3,6 +3,10 @@ import { User } from './User';
 
 @Entity({ name: 'payments' })
 export class Payments {
+  constructor(partial: Partial<Payments>) {
+    Object.assign(this, partial);
+  }
+
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
