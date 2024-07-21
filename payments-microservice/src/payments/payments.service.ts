@@ -2,15 +2,15 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { InjectRepository } from '@nestjs/typeorm';
 import { lastValueFrom } from 'rxjs';
-import { Payments } from 'src/typeorm/entities/Payments';
+import { PaymentEntity } from 'shared-package';
 import { Repository } from 'typeorm';
 import { CreatePaymentDto } from './dto/CreatePayment.dto';
 
 @Injectable()
 export class PaymentsService {
   constructor(
-    @InjectRepository(Payments)
-    private paymentsRepository: Repository<Payments>,
+    @InjectRepository(PaymentEntity)
+    private paymentsRepository: Repository<PaymentEntity>,
     @Inject('NATS_SERVICE') private natsClient: ClientProxy,
   ) {}
 

@@ -2,9 +2,11 @@ FROM node:18
 
 WORKDIR /usr/src/app
 
-COPY package.json ./
-COPY package-lock.json ./
-
+COPY ./http-api-gateway/package*.json ./
+COPY ./shared-package/dist ./shared-package
 RUN npm install
 
-COPY . .
+COPY ./http-api-gateway .
+RUN npm run build
+
+CMD ["npm", "run", "start:dev"]

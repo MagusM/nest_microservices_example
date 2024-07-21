@@ -1,9 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Payments } from './typeorm/entities/Payments';
-import { User } from './typeorm/entities/User';
+import { PaymentEntity, UserEntity } from 'shared-package';
 import { UserModule } from './users/users.module';
-import { UserTypesModule } from './user-types/user-types.module';
 
 @Module({
   imports: [
@@ -13,12 +11,11 @@ import { UserTypesModule } from './user-types/user-types.module';
       host: 'mysql_db',
       port: 3306,
       database: 'nestjs_db',
-      entities: [User, Payments],
+      entities: [UserEntity, PaymentEntity],
       synchronize: true,
       username: 'testuser',
       password: 'testuser123',
     }),
-    UserTypesModule,
   ],
   controllers: [],
   providers: [],

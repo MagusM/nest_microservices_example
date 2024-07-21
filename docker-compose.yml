@@ -1,25 +1,52 @@
+version: '3'
 services:
+  shared-package:
+    build:
+      context: ./shared-package
+      dockerfile: Dockerfile
+    volumes:
+      - ./shared-package:/usr/src/app/shared-package
+    command: npm run build
+
   api_gateway:
-    build: ./http-api-gateway
+    build:
+      context: .
+      dockerfile: ./http-api-gateway/Dockerfile
     ports:
       - "3000:3000"
     volumes:
       - ./http-api-gateway/src:/usr/src/app/src
+      - ./shared-package:/usr/src/app/shared-package
+      - /usr/src/app/node_modules
     command: npm run start:dev
+    depends_on:
+      - shared-package
     environment:
       - PORT=3000
 
   users_microservice:
-    build: ./users-microservice
+    build:
+      context: .
+      dockerfile: ./users-microservice/Dockerfile
     volumes:
       - ./users-microservice/src:/usr/src/app/src
+      - ./shared-package:/usr/src/app/shared-package
+      - /usr/src/app/node_modules
     command: npm run start:dev
+    depends_on:
+      - shared-package
 
   payments_microservice:
-    build: ./payments-microservice
+    build:
+      context: .
+      dockerfile: ./payments-microservice/Dockerfile
     volumes:
       - ./payments-microservice/src:/usr/src/app/src
+      - ./shared-package:/usr/src/app/shared-package
+      - /usr/src/app/node_modules
     command: npm run start:dev
+    depends_on:
+      - shared-package
 
   nats:
     image: nats
@@ -29,13 +56,12 @@ services:
   mysql_db:
     image: mysql
     ports:
-     - "3306:3306"
+      - "3306:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=root_password_123
       - MYSQL_DATABASE=nestjs_db
       - MYSQL_USER=testuser
       - MYSQL_PASSWORD=testuser123
-      - MYSQL_TCP_PORT=3306
     volumes:
       - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
     healthcheck:
